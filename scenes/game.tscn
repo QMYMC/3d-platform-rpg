@@ -1,0 +1,294 @@
+[gd_scene format=3 uid="uid://dgfphyxod3ei6"]
+
+[ext_resource type="PackedScene" uid="uid://ba2x71enacli7" path="res://scenes/player.tscn" id="1_uwrxv"]
+[ext_resource type="PackedScene" uid="uid://ctqr43brwhe1r" path="res://scenes/enemy.tscn" id="2_yqjtg"]
+[ext_resource type="PackedScene" path="res://scenes/level.tscn" id="3_level"]
+[ext_resource type="AudioStream" uid="uid://cm8ncbpf8wgf0" path="res://audio/music.ogg" id="4_lbhrr"]
+[ext_resource type="Script" path="res://scenes/game.gd" id="5_game"]
+[ext_resource type="PackedScene" path="res://scenes/exploration.tscn" id="6_adventure"]
+[ext_resource type="PackedScene" path="res://scenes/mage_encounters.tscn" id="7_guards"]
+[ext_resource type="PackedScene" path="res://scenes/boss_arena.tscn" id="8_boss"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_uwrxv"]
+sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
+ground_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
+
+[sub_resource type="Sky" id="Sky_yqjtg"]
+sky_material = SubResource("ProceduralSkyMaterial_uwrxv")
+
+[sub_resource type="Environment" id="Environment_lnu2h"]
+background_mode = 2
+sky = SubResource("Sky_yqjtg")
+tonemap_mode = 2
+glow_enabled = true
+
+[node name="Game" type="Node3D" unique_id=1030589402]
+script = ExtResource("5_game")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=479297445]
+environment = SubResource("Environment_lnu2h")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=894551766]
+transform = Transform3D(-0.8660254, -0.43301278, 0.25, 0, 0.49999997, 0.86602545, -0.50000006, 0.75, -0.43301266, 0, 0, 0)
+light_color = Color(0.9411765, 0.9411765, 0.9411765, 1)
+light_specular = 0.3
+shadow_enabled = true
+
+[node name="Characters" type="Node3D" parent="." unique_id=1264970318]
+
+[node name="Player" parent="Characters" unique_id=308961290 instance=ExtResource("1_uwrxv")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.08, 3)
+
+[node name="Enemy" parent="Characters" unique_id=1476120300 instance=ExtResource("2_yqjtg")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.5, 0.08, -3)
+notice_radius = 3.5
+chase_limit = 2.5
+
+[node name="Level" parent="." instance=ExtResource("3_level")]
+
+[node name="BGMusic" type="AudioStreamPlayer" parent="." unique_id=970044419]
+stream = ExtResource("4_lbhrr")
+volume_db = -10.0
+
+[node name="Adventure" parent="." instance=ExtResource("6_adventure")]
+
+[node name="RangedGuards" parent="." instance=ExtResource("7_guards")]
+
+[node name="BossArena" parent="." instance=ExtResource("8_boss")]
+
+[node name="FailureUI" type="CanvasLayer" parent="."]
+layer = 10
+
+[node name="FailureScreen" type="Control" parent="FailureUI"]
+visible = false
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Dimmer" type="ColorRect" parent="FailureUI/FailureScreen"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.02, 0.03, 0.05, 0.72)
+
+[node name="CenterContainer" type="CenterContainer" parent="FailureUI/FailureScreen"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="PanelContainer" type="PanelContainer" parent="FailureUI/FailureScreen/CenterContainer"]
+custom_minimum_size = Vector2(360, 0)
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="FailureUI/FailureScreen/CenterContainer/PanelContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 36
+theme_override_constants/margin_top = 28
+theme_override_constants/margin_right = 36
+theme_override_constants/margin_bottom = 28
+
+[node name="Buttons" type="VBoxContainer" parent="FailureUI/FailureScreen/CenterContainer/PanelContainer/MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 18
+
+[node name="Title" type="Label" parent="FailureUI/FailureScreen/CenterContainer/PanelContainer/MarginContainer/Buttons"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 32
+text = "挑战失败"
+horizontal_alignment = 1
+
+[node name="RetryButton" type="Button" parent="FailureUI/FailureScreen/CenterContainer/PanelContainer/MarginContainer/Buttons"]
+custom_minimum_size = Vector2(0, 56)
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = "重新挑战"
+
+[node name="QuitButton" type="Button" parent="FailureUI/FailureScreen/CenterContainer/PanelContainer/MarginContainer/Buttons"]
+custom_minimum_size = Vector2(0, 56)
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = "退出游戏"
+
+[node name="StartOverButton" type="Button" parent="FailureUI/FailureScreen/CenterContainer/PanelContainer/MarginContainer/Buttons"]
+custom_minimum_size = Vector2(0, 48)
+layout_mode = 2
+theme_override_font_sizes/font_size = 21
+text = "从头开始"
+
+[node name="RouteUI" type="CanvasLayer" parent="."]
+layer = 2
+
+[node name="Status" type="Label" parent="RouteUI"]
+anchors_preset = 10
+anchor_right = 1.0
+offset_top = 16.0
+offset_bottom = 48.0
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 6
+theme_override_font_sizes/font_size = 22
+text = "当前起点：草地营地"
+horizontal_alignment = 1
+mouse_filter = 2
+
+[node name="Controls" type="Label" parent="RouteUI"]
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -46.0
+offset_bottom = -12.0
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 6
+theme_override_font_sizes/font_size = 20
+text = "WASD 移动  ·  空格跳跃 / 踩头  ·  按住右键转动相机  ·  沿浅黄色箭头前进"
+horizontal_alignment = 1
+mouse_filter = 2
+
+[node name="RestartButton" type="Button" parent="RouteUI"]
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -170.0
+offset_top = 12.0
+offset_right = -16.0
+offset_bottom = 56.0
+theme_override_font_sizes/font_size = 20
+text = "从头开始"
+
+[node name="Toast" type="Label" parent="RouteUI"]
+visible = false
+anchor_right = 1.0
+offset_top = 70.0
+offset_bottom = 110.0
+theme_override_colors/font_color = Color(0.5, 1, 0.78, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 6
+theme_override_font_sizes/font_size = 25
+horizontal_alignment = 1
+mouse_filter = 2
+
+[node name="ToastTimer" type="Timer" parent="RouteUI"]
+wait_time = 3.0
+one_shot = true
+
+[node name="Runes" type="Label" parent="RouteUI"]
+offset_left = 16.0
+offset_top = 60.0
+offset_right = 240.0
+offset_bottom = 96.0
+theme_override_colors/font_color = Color(1, 0.88, 0.4, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 6
+theme_override_font_sizes/font_size = 27
+text = "符文 0/3"
+mouse_filter = 2
+
+[node name="Ability" type="Label" parent="RouteUI"]
+offset_left = 16.0
+offset_top = 100.0
+offset_right = 420.0
+offset_bottom = 132.0
+theme_override_colors/font_color = Color(0.45, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 6
+theme_override_font_sizes/font_size = 20
+text = "二段跳：前往遗迹主路解锁"
+mouse_filter = 2
+
+[node name="BossUI" type="CanvasLayer" parent="."]
+layer = 3
+
+[node name="Bar" type="ColorRect" parent="BossUI"]
+visible = false
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -360.0
+offset_right = 360.0
+offset_top = 132.0
+offset_bottom = 218.0
+color = Color(0.02, 0.03, 0.05, 0.75)
+mouse_filter = 2
+
+[node name="Name" type="Label" parent="BossUI/Bar"]
+anchor_right = 1.0
+offset_top = 5.0
+offset_bottom = 42.0
+theme_override_font_sizes/font_size = 27
+horizontal_alignment = 1
+mouse_filter = 2
+
+[node name="Status" type="Label" parent="BossUI/Bar"]
+anchor_right = 1.0
+offset_top = 44.0
+offset_bottom = 78.0
+theme_override_font_sizes/font_size = 22
+horizontal_alignment = 1
+mouse_filter = 2
+
+[node name="EndUI" type="CanvasLayer" parent="."]
+layer = 20
+
+[node name="Victory" type="Control" parent="EndUI"]
+visible = false
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="Dimmer" type="ColorRect" parent="EndUI/Victory"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color(0.02, 0.03, 0.05, 0.8)
+
+[node name="Center" type="CenterContainer" parent="EndUI/Victory"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="Panel" type="PanelContainer" parent="EndUI/Victory/Center"]
+custom_minimum_size = Vector2(420, 0)
+layout_mode = 2
+
+[node name="Margin" type="MarginContainer" parent="EndUI/Victory/Center/Panel"]
+layout_mode = 2
+theme_override_constants/margin_left = 36
+theme_override_constants/margin_top = 28
+theme_override_constants/margin_right = 36
+theme_override_constants/margin_bottom = 28
+
+[node name="Items" type="VBoxContainer" parent="EndUI/Victory/Center/Panel/Margin"]
+layout_mode = 2
+theme_override_constants/separation = 18
+
+[node name="Title" type="Label" parent="EndUI/Victory/Center/Panel/Margin/Items"]
+layout_mode = 2
+text = "冒险完成"
+horizontal_alignment = 1
+theme_override_font_sizes/font_size = 34
+theme_override_colors/font_color = Color(1, 0.86, 0.45, 1)
+
+[node name="Stats" type="Label" parent="EndUI/Victory/Center/Panel/Margin/Items"]
+layout_mode = 2
+horizontal_alignment = 1
+theme_override_font_sizes/font_size = 24
+
+[node name="Restart" type="Button" parent="EndUI/Victory/Center/Panel/Margin/Items"]
+layout_mode = 2
+custom_minimum_size = Vector2(0, 54)
+text = "从头再玩"
+theme_override_font_sizes/font_size = 24
+
+[node name="Quit" type="Button" parent="EndUI/Victory/Center/Panel/Margin/Items"]
+layout_mode = 2
+custom_minimum_size = Vector2(0, 54)
+text = "退出游戏"
+theme_override_font_sizes/font_size = 24
+
+[connection signal="timeout" from="RouteUI/ToastTimer" to="RouteUI/Toast" method="hide"]

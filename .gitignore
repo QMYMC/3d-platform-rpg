@@ -1,0 +1,10 @@
+.godot/
+/android/
+/test_output/
+/exports/
+*.tmp
+*.log
+.DS_Store
+Thumbs.db
+.env
+.env.*

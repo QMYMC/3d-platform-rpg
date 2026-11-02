@@ -1,0 +1,63 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scenes/pickup.gd" id="1_ou4tv"]
+[ext_resource type="AudioStream" path="res://audio/jump.wav" id="2_ti5gc"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_bbh5w"]
+radius = 0.55
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_fheat"]
+albedo_color = Color(1, 0.83137256, 0.36078432, 1)
+emission_enabled = true
+emission = Color(1, 0.83137256, 0.36078432, 1)
+emission_energy_multiplier = 1.3
+
+[sub_resource type="SphereMesh" id="SphereMesh_f8myq"]
+radius = 0.36
+height = 0.9
+radial_segments = 6
+rings = 3
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_q8g0s"]
+albedo_color = Color(1, 0.83137256, 0.36078432, 1)
+emission_enabled = true
+emission = Color(1, 0.83137256, 0.36078432, 1)
+emission_energy_multiplier = 1.3
+
+[sub_resource type="TorusMesh" id="TorusMesh_hdpge"]
+inner_radius = 0.48
+outer_radius = 0.53
+rings = 24
+ring_segments = 6
+
+[node name="Pickup" type="Area3D" unique_id=47950253 groups=["Pickups"]]
+collision_layer = 0
+collision_mask = 2
+script = ExtResource("1_ou4tv")
+
+[node name="Trigger" type="CollisionShape3D" parent="." unique_id=888502285]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.2, 0)
+shape = SubResource("SphereShape3D_bbh5w")
+
+[node name="Visual" type="Node3D" parent="." unique_id=488916675]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.2, 0)
+
+[node name="Gem" type="MeshInstance3D" parent="Visual" unique_id=2145181376]
+material_override = SubResource("StandardMaterial3D_fheat")
+mesh = SubResource("SphereMesh_f8myq")
+
+[node name="Halo" type="MeshInstance3D" parent="Visual" unique_id=614828022]
+material_override = SubResource("StandardMaterial3D_q8g0s")
+mesh = SubResource("TorusMesh_hdpge")
+
+[node name="Label" type="Label3D" parent="." unique_id=246400288]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.5, 0)
+visibility_range_end = 16.0
+pixel_size = 0.007
+billboard = 1
+text = "符文 · 靠近收集"
+outline_size = 8
+
+[node name="PickupSound" type="AudioStreamPlayer3D" parent="." unique_id=220088897]
+stream = ExtResource("2_ti5gc")
+pitch_scale = 1.7

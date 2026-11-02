@@ -1,0 +1,89 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scenes/rune_gate.gd" id="1_vvi2w"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_m7u5c"]
+transparency = 1
+albedo_color = Color(0.3, 0.7, 1, 0.5)
+emission_enabled = true
+emission = Color(0.3, 0.7, 1, 0.5)
+emission_energy_multiplier = 1.3
+
+[sub_resource type="BoxMesh" id="BoxMesh_lof61"]
+size = Vector3(26, 12, 0.25)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_i34vy"]
+size = Vector3(26, 12, 0.4)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_yj4q0"]
+albedo_color = Color(0.35686275, 0.4117647, 0.50980395, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_uofvp"]
+size = Vector3(0.7, 4.4, 0.7)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_tfgab"]
+size = Vector3(0.7, 4.4, 0.7)
+
+[sub_resource type="BoxMesh" id="BoxMesh_y4kef"]
+size = Vector3(0.7, 4.4, 0.7)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_ypbyi"]
+size = Vector3(0.7, 4.4, 0.7)
+
+[sub_resource type="BoxMesh" id="BoxMesh_jfp1l"]
+size = Vector3(15.7, 0.5, 0.7)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_6balo"]
+size = Vector3(15.7, 0.5, 0.7)
+
+[node name="RuneGate" type="Node3D" unique_id=1898346925]
+script = ExtResource("1_vvi2w")
+
+[node name="Barrier" type="MeshInstance3D" parent="." unique_id=487535346]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 6, 0)
+material_override = SubResource("StandardMaterial3D_m7u5c")
+visibility_range_end = 23.0
+mesh = SubResource("BoxMesh_lof61")
+
+[node name="Blocker" type="StaticBody3D" parent="." unique_id=284618111]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Blocker" unique_id=265717017]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 6, 0)
+shape = SubResource("BoxShape3D_i34vy")
+
+[node name="Frame" type="StaticBody3D" parent="." unique_id=918105155]
+
+[node name="Post-7_5" type="MeshInstance3D" parent="Frame" unique_id=146822010]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.5, 2.2, 0)
+material_override = SubResource("StandardMaterial3D_yj4q0")
+mesh = SubResource("BoxMesh_uofvp")
+
+[node name="PostShape-7_5" type="CollisionShape3D" parent="Frame" unique_id=1073505506]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.5, 2.2, 0)
+shape = SubResource("BoxShape3D_tfgab")
+
+[node name="Post7_5" type="MeshInstance3D" parent="Frame" unique_id=1566724213]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.5, 2.2, 0)
+material_override = SubResource("StandardMaterial3D_yj4q0")
+mesh = SubResource("BoxMesh_y4kef")
+
+[node name="PostShape7_5" type="CollisionShape3D" parent="Frame" unique_id=2112456537]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.5, 2.2, 0)
+shape = SubResource("BoxShape3D_ypbyi")
+
+[node name="Beam" type="MeshInstance3D" parent="Frame" unique_id=792218727]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.5, 0)
+material_override = SubResource("StandardMaterial3D_yj4q0")
+mesh = SubResource("BoxMesh_jfp1l")
+
+[node name="BeamShape" type="CollisionShape3D" parent="Frame" unique_id=2104490241]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.5, 0)
+shape = SubResource("BoxShape3D_6balo")
+
+[node name="Label" type="Label3D" parent="." unique_id=40824740]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.2, 0.6)
+visibility_range_end = 16.0
+pixel_size = 0.007
+billboard = 1
+text = "符文门禁 · 还缺 3 枚"
+outline_size = 8

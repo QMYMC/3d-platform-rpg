@@ -1,0 +1,141 @@
+[gd_scene format=3]
+
+[ext_resource type="PackedScene" uid="uid://ba2x71enacli7" path="res://scenes/player.tscn" id="1_uwrxv"]
+[ext_resource type="PackedScene" uid="uid://ctqr43brwhe1r" path="res://scenes/enemy.tscn" id="2_yqjtg"]
+[ext_resource type="MeshLibrary" uid="uid://bocv7cn03omov" path="res://mesh/test_mesh_collision.tres" id="3_lnu2h"]
+[ext_resource type="AudioStream" uid="uid://cm8ncbpf8wgf0" path="res://audio/music.ogg" id="4_lbhrr"]
+[ext_resource type="Script" path="res://scenes/game.gd" id="5_game"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_uwrxv"]
+sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
+ground_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
+
+[sub_resource type="Sky" id="Sky_yqjtg"]
+sky_material = SubResource("ProceduralSkyMaterial_uwrxv")
+
+[sub_resource type="Environment" id="Environment_lnu2h"]
+background_mode = 2
+sky = SubResource("Sky_yqjtg")
+tonemap_mode = 2
+glow_enabled = true
+
+[sub_resource type="BoxMesh" id="BoxMesh_8cj0n"]
+size = Vector3(20, 1, 20)
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_uwrxv"]
+data = PackedVector3Array(-10, 0.5, 10, 10, 0.5, 10, -10, -0.5, 10, 10, 0.5, 10, 10, -0.5, 10, -10, -0.5, 10, 10, 0.5, -10, -10, 0.5, -10, 10, -0.5, -10, -10, 0.5, -10, -10, -0.5, -10, 10, -0.5, -10, 10, 0.5, 10, 10, 0.5, -10, 10, -0.5, 10, 10, 0.5, -10, 10, -0.5, -10, 10, -0.5, 10, -10, 0.5, -10, -10, 0.5, 10, -10, -0.5, -10, -10, 0.5, 10, -10, -0.5, 10, -10, -0.5, -10, 10, 0.5, 10, -10, 0.5, 10, 10, 0.5, -10, -10, 0.5, 10, -10, 0.5, -10, 10, 0.5, -10, -10, -0.5, 10, 10, -0.5, 10, -10, -0.5, -10, 10, -0.5, 10, 10, -0.5, -10, -10, -0.5, -10)
+
+[sub_resource type="BoxMesh" id="BoxMesh_uwrxv"]
+size = Vector3(12.505, 7.25, 1)
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_yqjtg"]
+data = PackedVector3Array(-6.2525, 3.625, 0.5, 6.2525, 3.625, 0.5, -6.2525, -3.625, 0.5, 6.2525, 3.625, 0.5, 6.2525, -3.625, 0.5, -6.2525, -3.625, 0.5, 6.2525, 3.625, -0.5, -6.2525, 3.625, -0.5, 6.2525, -3.625, -0.5, -6.2525, 3.625, -0.5, -6.2525, -3.625, -0.5, 6.2525, -3.625, -0.5, 6.2525, 3.625, 0.5, 6.2525, 3.625, -0.5, 6.2525, -3.625, 0.5, 6.2525, 3.625, -0.5, 6.2525, -3.625, -0.5, 6.2525, -3.625, 0.5, -6.2525, 3.625, -0.5, -6.2525, 3.625, 0.5, -6.2525, -3.625, -0.5, -6.2525, 3.625, 0.5, -6.2525, -3.625, 0.5, -6.2525, -3.625, -0.5, 6.2525, 3.625, 0.5, -6.2525, 3.625, 0.5, 6.2525, 3.625, -0.5, -6.2525, 3.625, 0.5, -6.2525, 3.625, -0.5, 6.2525, 3.625, -0.5, -6.2525, -3.625, 0.5, 6.2525, -3.625, 0.5, -6.2525, -3.625, -0.5, 6.2525, -3.625, 0.5, 6.2525, -3.625, -0.5, -6.2525, -3.625, -0.5)
+
+[node name="Game" type="Node3D" unique_id=1030589402]
+script = ExtResource("5_game")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=479297445]
+environment = SubResource("Environment_lnu2h")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=894551766]
+transform = Transform3D(-0.8660254, -0.43301278, 0.25, 0, 0.49999997, 0.86602545, -0.50000006, 0.75, -0.43301266, 0, 0, 0)
+light_color = Color(0.9411765, 0.9411765, 0.9411765, 1)
+light_specular = 0.3
+shadow_enabled = true
+
+[node name="Floor" type="StaticBody3D" parent="." unique_id=1451264533]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Floor" unique_id=409741184]
+mesh = SubResource("BoxMesh_8cj0n")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Floor" unique_id=5433452]
+shape = SubResource("ConcavePolygonShape3D_uwrxv")
+
+[node name="Characters" type="Node3D" parent="." unique_id=1264970318]
+
+[node name="Player" parent="Characters" unique_id=308961290 instance=ExtResource("1_uwrxv")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.7498703, 0, -7.131997)
+
+[node name="Enemy" parent="Characters" unique_id=1476120300 instance=ExtResource("2_yqjtg")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.605919, 0, 8.397514)
+
+[node name="StaticBody3D" type="StaticBody3D" parent="." unique_id=306316872]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.554595, 8.787121)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="StaticBody3D" unique_id=112504081]
+mesh = SubResource("BoxMesh_uwrxv")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D" unique_id=1727381922]
+shape = SubResource("ConcavePolygonShape3D_yqjtg")
+
+[node name="GridMap" type="GridMap" parent="." unique_id=1453837293]
+mesh_library = ExtResource("3_lnu2h")
+data = {
+"cells": PackedInt32Array(11, 7, 0, 11, 6, 0, 11, 5, 0, 10, 4, 0, 10, 3, 0, 10, 2, 0, 9, 2, 0, 9, 1, 0, 9, 0, 0, 9, 65535, 0, 9, 65534, 0, 8, 65534, 0, 8, 65533, 0, 8, 65532, 0, 7, 65532, 0, 7, 65533, 0, 1, 2, 0, 1, 1, 0, 1, 0, 0, 1, 65535, 0, 0, 65535, 0, 0, 65534, 0, 0, 65533, 0, 1, 65533, 0, 2, 65533, 0)
+}
+
+[node name="BGMusic" type="AudioStreamPlayer" parent="." unique_id=970044419]
+stream = ExtResource("4_lbhrr")
+volume_db = -10.0
+
+[node name="FailureUI" type="CanvasLayer" parent="."]
+layer = 10
+
+[node name="FailureScreen" type="Control" parent="FailureUI"]
+visible = false
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Dimmer" type="ColorRect" parent="FailureUI/FailureScreen"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.02, 0.03, 0.05, 0.72)
+
+[node name="CenterContainer" type="CenterContainer" parent="FailureUI/FailureScreen"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="PanelContainer" type="PanelContainer" parent="FailureUI/FailureScreen/CenterContainer"]
+custom_minimum_size = Vector2(360, 0)
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="FailureUI/FailureScreen/CenterContainer/PanelContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 36
+theme_override_constants/margin_top = 28
+theme_override_constants/margin_right = 36
+theme_override_constants/margin_bottom = 28
+
+[node name="Buttons" type="VBoxContainer" parent="FailureUI/FailureScreen/CenterContainer/PanelContainer/MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 18
+
+[node name="Title" type="Label" parent="FailureUI/FailureScreen/CenterContainer/PanelContainer/MarginContainer/Buttons"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 32
+text = "挑战失败"
+horizontal_alignment = 1
+
+[node name="RetryButton" type="Button" parent="FailureUI/FailureScreen/CenterContainer/PanelContainer/MarginContainer/Buttons"]
+custom_minimum_size = Vector2(0, 56)
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = "重新挑战"
+
+[node name="QuitButton" type="Button" parent="FailureUI/FailureScreen/CenterContainer/PanelContainer/MarginContainer/Buttons"]
+custom_minimum_size = Vector2(0, 56)
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = "退出游戏"

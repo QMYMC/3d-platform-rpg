@@ -1,0 +1,173 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scenes/boss_arena.gd" id="1_jwlvh"]
+[ext_resource type="PackedScene" path="res://scenes/boss.tscn" id="2_rohff"]
+[ext_resource type="Script" path="res://scenes/boss.gd" id="3_l4etk"]
+[ext_resource type="Script" path="res://scenes/checkpoint.gd" id="4_jfsgb"]
+[ext_resource type="PackedScene" path="res://scenes/health_pickup.tscn" id="5_kjfj0"]
+[ext_resource type="Script" path="res://scenes/pickup.gd" id="6_pn0uo"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_653ey"]
+size = Vector3(16, 8, 10.5)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_5gv21"]
+transparency = 1
+shading_mode = 0
+albedo_color = Color(0.6, 0.55, 1, 0.09)
+
+[sub_resource type="BoxMesh" id="BoxMesh_bp18l"]
+size = Vector3(0.25, 12, 12)
+
+[sub_resource type="BoxMesh" id="BoxMesh_6nmae"]
+size = Vector3(0.25, 12, 12)
+
+[sub_resource type="BoxMesh" id="BoxMesh_f32w5"]
+size = Vector3(16.6, 12, 0.25)
+
+[sub_resource type="BoxMesh" id="BoxMesh_g8h7h"]
+size = Vector3(16.6, 12, 0.25)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_6mgkk"]
+size = Vector3(0.25, 12, 12)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_hta4o"]
+size = Vector3(0.25, 12, 12)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_1j6tv"]
+size = Vector3(16.6, 12, 0.25)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_qsg5o"]
+size = Vector3(16.6, 12, 0.25)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_pnlnb"]
+size = Vector3(3.6, 3, 3.6)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_f3gk7"]
+top_radius = 0.38
+height = 0.16
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_issxj"]
+size = Vector3(2, 1, 2)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_fdjxa"]
+albedo_color = Color(0.43137255, 0.5176471, 0.57254905, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_b181l"]
+size = Vector3(2, 1, 2)
+
+[node name="BossArena" type="Node3D" unique_id=1968173023]
+script = ExtResource("1_jwlvh")
+
+[node name="Boss" type="CharacterBody3D" parent="." unique_id=1557070033 groups=["Bosses", "Enemies"] instance=ExtResource("2_rohff")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 17, 1, -61)
+collision_layer = 4
+script = ExtResource("3_l4etk")
+
+[node name="Entrance" type="Area3D" parent="." unique_id=1110543442]
+collision_layer = 0
+collision_mask = 2
+
+[node name="Trigger" type="CollisionShape3D" parent="Entrance" unique_id=2009251370]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 18, 4, -61.75)
+shape = SubResource("BoxShape3D_653ey")
+
+[node name="BattleBarrier" type="StaticBody3D" parent="." unique_id=1023137098]
+
+[node name="Visuals" type="Node3D" parent="BattleBarrier" unique_id=196015207]
+
+[node name="Field0" type="MeshInstance3D" parent="BattleBarrier/Visuals" unique_id=853607405]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.8, 7, -61)
+material_override = SubResource("StandardMaterial3D_5gv21")
+mesh = SubResource("BoxMesh_bp18l")
+
+[node name="Field1" type="MeshInstance3D" parent="BattleBarrier/Visuals" unique_id=933235020]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 26.2, 7, -61)
+material_override = SubResource("StandardMaterial3D_5gv21")
+mesh = SubResource("BoxMesh_6nmae")
+
+[node name="Field2" type="MeshInstance3D" parent="BattleBarrier/Visuals" unique_id=379225086]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 18, 7, -67.2)
+material_override = SubResource("StandardMaterial3D_5gv21")
+mesh = SubResource("BoxMesh_f32w5")
+
+[node name="Field3" type="MeshInstance3D" parent="BattleBarrier/Visuals" unique_id=754130197]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 18, 7, -55.2)
+material_override = SubResource("StandardMaterial3D_5gv21")
+mesh = SubResource("BoxMesh_g8h7h")
+
+[node name="Wall0" type="CollisionShape3D" parent="BattleBarrier" unique_id=61239115]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.8, 7, -61)
+shape = SubResource("BoxShape3D_6mgkk")
+disabled = true
+
+[node name="Wall1" type="CollisionShape3D" parent="BattleBarrier" unique_id=1526776921]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 26.2, 7, -61)
+shape = SubResource("BoxShape3D_hta4o")
+disabled = true
+
+[node name="Wall2" type="CollisionShape3D" parent="BattleBarrier" unique_id=286577815]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 18, 7, -67.2)
+shape = SubResource("BoxShape3D_1j6tv")
+disabled = true
+
+[node name="Wall3" type="CollisionShape3D" parent="BattleBarrier" unique_id=1350572542]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 18, 7, -55.2)
+shape = SubResource("BoxShape3D_qsg5o")
+disabled = true
+
+[node name="Checkpoint_boss" type="Area3D" parent="." unique_id=2029826356 groups=["Checkpoints"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 17, 1, -52.3)
+collision_layer = 0
+collision_mask = 2
+script = ExtResource("4_jfsgb")
+checkpoint_id = &"boss"
+display_name = "守门者门前营地"
+requires_all_runes = true
+
+[node name="Trigger" type="CollisionShape3D" parent="Checkpoint_boss" unique_id=1803119507]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+shape = SubResource("BoxShape3D_pnlnb")
+
+[node name="Beacon" type="MeshInstance3D" parent="Checkpoint_boss" unique_id=2070632800]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.5, 0.1, 0)
+mesh = SubResource("CylinderMesh_f3gk7")
+
+[node name="Label" type="Label3D" parent="Checkpoint_boss" unique_id=994337991]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.5, 2, 0)
+visibility_range_end = 15.0
+pixel_size = 0.006
+billboard = 1
+modulate = Color(1, 0.94509804, 0.78039217, 1)
+text = "熔岩庭院入口
+靠近激活检查点"
+outline_size = 8
+
+[node name="Spawn" type="Marker3D" parent="Checkpoint_boss" unique_id=1724346142]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.08, 0)
+
+[node name="FullHeal" type="Area3D" parent="." unique_id=1489651730 groups=["Pickups"] instance=ExtResource("5_kjfj0")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 17, 1, -52.3)
+collision_layer = 0
+collision_mask = 2
+script = ExtResource("6_pn0uo")
+kind = 2
+heal_amount = 20
+
+[node name="JumpPlatform" type="StaticBody3D" parent="." unique_id=2008135481]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13, 1.5, -61)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="JumpPlatform" unique_id=1420675283]
+shape = SubResource("BoxShape3D_issxj")
+
+[node name="Mesh" type="MeshInstance3D" parent="JumpPlatform" unique_id=1057214567]
+material_override = SubResource("StandardMaterial3D_fdjxa")
+mesh = SubResource("BoxMesh_b181l")
+
+[node name="EntrySign" type="Label3D" parent="." unique_id=618997877]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 19.3, 3.7, -53)
+visibility_range_end = 18.0
+pixel_size = 0.009
+billboard = 1
+text = "门前补满生命
+红色躲，绿色踩头"
+outline_size = 8

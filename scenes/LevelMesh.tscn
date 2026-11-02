@@ -1,0 +1,17 @@
+[gd_scene format=3 uid="uid://cc3j04d02a2e7"]
+
+[ext_resource type="PackedScene" uid="uid://hlvek5ca28v1" path="res://graphics/gltf/prototype.gltf" id="1_fvgtr"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_fvgtr"]
+size = Vector3(2, 2, 2)
+
+[node name="LevelMesh" type="Node3D" unique_id=1236082728]
+
+[node name="prototype2" parent="." unique_id=102119263 instance=ExtResource("1_fvgtr")]
+
+[node name="StaticBody3D" type="StaticBody3D" parent="prototype2/prototype" unique_id=830283150]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="prototype2/prototype/StaticBody3D" unique_id=1406871436]
+shape = SubResource("BoxShape3D_fvgtr")
+
+[editable path="prototype2"]

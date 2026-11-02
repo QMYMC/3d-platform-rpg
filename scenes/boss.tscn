@@ -1,0 +1,147 @@
+[gd_scene format=4]
+
+[ext_resource type="Script" path="res://scenes/boss.gd" id="1_qnbj4"]
+[ext_resource type="PackedScene" path="res://graphics/characters/nagonford/Nagonford_Animated.glb" id="2_r3bxh"]
+[ext_resource type="AudioStream" path="res://audio/sword sound.wav" id="3_wqpjq"]
+[ext_resource type="AudioStream" path="res://audio/hit.wav" id="4_2cdgk"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_qsl3t"]
+radius = 0.7
+height = 2.6
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_2avx2"]
+transparency = 1
+shading_mode = 0
+albedo_color = Color(0.3, 0.65, 1, 0.12)
+
+[sub_resource type="SphereMesh" id="SphereMesh_5f346"]
+radius = 1.15
+height = 3.2
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_0onds"]
+shading_mode = 0
+albedo_color = Color(0.44705883, 1, 0.6117647, 1)
+
+[sub_resource type="TorusMesh" id="TorusMesh_lfs1x"]
+inner_radius = 0.98
+outer_radius = 1.1
+rings = 32
+ring_segments = 8
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_8eiau"]
+transparency = 1
+cull_mode = 2
+shading_mode = 0
+albedo_color = Color(1, 0.16, 0.08, 0.65)
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_vn2fc"]
+_surfaces = [{
+"aabb": AABB(-3.262708, 0, 0, 6.525416, 1e-05, 3.6),
+"format": 34359738369,
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 78,
+"vertex_data": PackedByteArray("AAAAAAAAAAAAAAAANdBQwAAAAAAUvsI/QYhHwAAAAABmZuY/AAAAAAAAAAAAAAAAQYhHwAAAAABmZuY/jrs8wAAAAADqJgRAAAAAAAAAAAAAAAAAjrs8wAAAAADqJgRAI38wwAAAAAAoGRRAAAAAAAAAAAAAAAAAI38wwAAAAAAoGRRA2uoiwAAAAADa6iJAAAAAAAAAAAAAAAAA2uoiwAAAAADa6iJAKBkUwAAAAAAjfzBAAAAAAAAAAAAAAAAAKBkUwAAAAAAjfzBA6iYEwAAAAACOuzxAAAAAAAAAAAAAAAAA6iYEwAAAAACOuzxAZmbmvwAAAABBiEdAAAAAAAAAAAAAAAAAZmbmvwAAAABBiEdAFL7CvwAAAAA10FBAAAAAAAAAAAAAAAAAFL7CvwAAAAA10FBAV5qdvwAAAABTgVhAAAAAAAAAAAAAAAAAV5qdvwAAAABTgVhAEoduvwAAAACfjF5AAAAAAAAAAAAAAAAAEoduvwAAAACfjF5AvwggvwAAAABS5mJAAAAAAAAAAAAAAAAAvwggvwAAAABS5mJAPaWgvgAAAAD0hWVAAAAAAAAAAAAAAAAAPaWgvgAAAAD0hWVAAAAAAAAAAABmZmZAAAAAAAAAAAAAAAAAAAAAAAAAAABmZmZAPaWgPgAAAAD0hWVAAAAAAAAAAAAAAAAAPaWgPgAAAAD0hWVAvwggPwAAAABS5mJAAAAAAAAAAAAAAAAAvwggPwAAAABS5mJAEoduPwAAAACfjF5AAAAAAAAAAAAAAAAAEoduPwAAAACfjF5AV5qdPwAAAABTgVhAAAAAAAAAAAAAAAAAV5qdPwAAAABTgVhAFL7CPwAAAAA10FBAAAAAAAAAAAAAAAAAFL7CPwAAAAA10FBAZmbmPwAAAABBiEdAAAAAAAAAAAAAAAAAZmbmPwAAAABBiEdA6iYEQAAAAACOuzxAAAAAAAAAAAAAAAAA6iYEQAAAAACOuzxAKBkUQAAAAAAjfzBAAAAAAAAAAAAAAAAAKBkUQAAAAAAjfzBA2uoiQAAAAADa6iJAAAAAAAAAAAAAAAAA2uoiQAAAAADa6iJAI38wQAAAAAAoGRRAAAAAAAAAAAAAAAAAI38wQAAAAAAoGRRAjrs8QAAAAADqJgRAAAAAAAAAAAAAAAAAjrs8QAAAAADqJgRAQYhHQAAAAABmZuY/AAAAAAAAAAAAAAAAQYhHQAAAAABmZuY/NdBQQAAAAAAUvsI/")
+}]
+
+[sub_resource type="BoxMesh" id="BoxMesh_gqd3i"]
+size = Vector3(0.12, 0.025, 6.6)
+
+[sub_resource type="BoxMesh" id="BoxMesh_mautr"]
+size = Vector3(0.12, 0.025, 6.6)
+
+[sub_resource type="BoxMesh" id="BoxMesh_ho3mf"]
+size = Vector3(0.12, 0.025, 6.6)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_7apjh"]
+shading_mode = 0
+albedo_color = Color(1, 0.38431373, 0.29803923, 1)
+
+[sub_resource type="SphereMesh" id="SphereMesh_qh5fr"]
+radius = 0.3
+height = 0.6
+
+[node name="Boss" type="CharacterBody3D" unique_id=1557070033 groups=["Bosses", "Enemies"]]
+collision_layer = 4
+script = ExtResource("1_qnbj4")
+
+[node name="Skin" type="Node3D" parent="." unique_id=49396949 instance=ExtResource("2_r3bxh")]
+transform = Transform3D(1.35, 0, 0, 0, 1.35, 0, 0, 0, 1.35, 0, 0, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=642814151]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.3, 0)
+shape = SubResource("CapsuleShape3D_qsl3t")
+
+[node name="Shield" type="MeshInstance3D" parent="." unique_id=5356552]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
+material_override = SubResource("StandardMaterial3D_2avx2")
+mesh = SubResource("SphereMesh_5f346")
+
+[node name="WeakRing" type="MeshInstance3D" parent="." unique_id=827154547]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.7, 0)
+visible = false
+material_override = SubResource("StandardMaterial3D_0onds")
+mesh = SubResource("TorusMesh_lfs1x")
+
+[node name="MeleeWarning" type="MeshInstance3D" parent="." unique_id=746905539]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.04, 0)
+visible = false
+material_override = SubResource("StandardMaterial3D_8eiau")
+mesh = SubResource("ArrayMesh_vn2fc")
+
+[node name="FanWarning" type="Node3D" parent="." unique_id=801132312]
+visible = false
+
+[node name="Lane-22_0" type="MeshInstance3D" parent="FanWarning" unique_id=1161851042]
+transform = Transform3D(0.92718387, 0, -0.37460658, 0, 1, 0, 0.37460658, 0, 0.92718387, -1.2362016, 0.04, 3.0597067)
+material_override = SubResource("StandardMaterial3D_8eiau")
+mesh = SubResource("BoxMesh_gqd3i")
+
+[node name="Lane0_0" type="MeshInstance3D" parent="FanWarning" unique_id=2105147520]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.04, 3.3)
+material_override = SubResource("StandardMaterial3D_8eiau")
+mesh = SubResource("BoxMesh_mautr")
+
+[node name="Lane22_0" type="MeshInstance3D" parent="FanWarning" unique_id=1761051759]
+transform = Transform3D(0.92718387, 0, 0.37460658, 0, 1, 0, -0.37460658, 0, 0.92718387, 1.2362016, 0.04, 3.0597067)
+material_override = SubResource("StandardMaterial3D_8eiau")
+mesh = SubResource("BoxMesh_ho3mf")
+
+[node name="ChargeOrb" type="MeshInstance3D" parent="." unique_id=1941951360]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.9, 0.3)
+visible = false
+material_override = SubResource("StandardMaterial3D_7apjh")
+mesh = SubResource("SphereMesh_qh5fr")
+
+[node name="Muzzle" type="Marker3D" parent="." unique_id=2123701472]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.2, 1.05)
+
+[node name="StateTimer" type="Timer" parent="." unique_id=1335315731]
+wait_time = 0.3
+one_shot = true
+
+[node name="WindupTimer" type="Timer" parent="." unique_id=1756496284]
+wait_time = 0.3
+one_shot = true
+
+[node name="VolleyTimer" type="Timer" parent="." unique_id=1296864447]
+wait_time = 0.3
+one_shot = true
+
+[node name="ShieldFlash" type="Timer" parent="." unique_id=166300621]
+wait_time = 0.3
+one_shot = true
+
+[node name="AttackSound" type="AudioStreamPlayer3D" parent="." unique_id=259381409]
+stream = ExtResource("3_wqpjq")
+
+[node name="HitSound" type="AudioStreamPlayer3D" parent="." unique_id=1629202553]
+stream = ExtResource("4_2cdgk")
+
+[node name="Label" type="Label3D" parent="." unique_id=1344459964]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.5, 0)
+visibility_range_end = 18.0
+pixel_size = 0.009
+billboard = 1
+text = "守门者 · 红色躲，绿色踩"
+outline_size = 8

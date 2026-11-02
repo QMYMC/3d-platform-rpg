@@ -1,0 +1,148 @@
+[gd_scene format=3 uid="uid://ba2x71enacli7"]
+
+[ext_resource type="PackedScene" uid="uid://bctcp65yp8t3f" path="res://graphics/characters/godette/godette.glb" id="1_3vyb7"]
+[ext_resource type="Script" uid="uid://cbvtnu81cql81" path="res://scenes/player.gd" id="1_g2els"]
+[ext_resource type="PackedScene" uid="uid://d0emlwpf2jmeb" path="res://scenes/camera_controller.tscn" id="3_qhqgy"]
+[ext_resource type="AudioStream" uid="uid://bilq3t7fuwdk3" path="res://audio/jump.wav" id="4_dqkch"]
+[ext_resource type="AudioStream" uid="uid://flpnunv46xfi" path="res://audio/hit.wav" id="5_qlg0r"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_g2els"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_qhqgy"]
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_tuyoq"]
+animation = &"Hit_A"
+
+[sub_resource type="AnimationNodeOneShot" id="AnimationNodeOneShot_fjrip"]
+fadein_time = 0.2
+fadeout_time = 0.2
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_qhqgy"]
+animation = &"Idle"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_qlg0r"]
+animation = &"Jump_Idle"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_dqkch"]
+animation = &"Running_A"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_qlg0r"]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_tuyoq"]
+xfade_time = 0.2
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_qhqgy"]
+xfade_time = 0.2
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_fjrip"]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_smehm"]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_ur7pv"]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_y4r1p"]
+
+[sub_resource type="AnimationNodeStateMachine" id="AnimationNodeStateMachine_smehm"]
+states/End/position = Vector2(825.3333, 103.11111)
+states/Idle/node = SubResource("AnimationNodeAnimation_qhqgy")
+states/Idle/position = Vector2(414, 101.259254)
+states/Jump/node = SubResource("AnimationNodeAnimation_qlg0r")
+states/Jump/position = Vector2(484.6667, 244)
+states/Running/node = SubResource("AnimationNodeAnimation_dqkch")
+states/Running/position = Vector2(634, 108)
+states/Start/position = Vector2(243.33333, 98.44444)
+transitions = ["Start", "Idle", SubResource("AnimationNodeStateMachineTransition_qlg0r"), "Idle", "Running", SubResource("AnimationNodeStateMachineTransition_tuyoq"), "Running", "Idle", SubResource("AnimationNodeStateMachineTransition_qhqgy"), "Idle", "Jump", SubResource("AnimationNodeStateMachineTransition_fjrip"), "Jump", "Idle", SubResource("AnimationNodeStateMachineTransition_smehm"), "Running", "Jump", SubResource("AnimationNodeStateMachineTransition_ur7pv"), "Jump", "Running", SubResource("AnimationNodeStateMachineTransition_y4r1p")]
+
+[sub_resource type="AnimationNodeBlendTree" id="AnimationNodeBlendTree_qhqgy"]
+graph_offset = Vector2(-457.9944, -0.4763794)
+nodes/MoveStateMachine/node = SubResource("AnimationNodeStateMachine_smehm")
+nodes/MoveStateMachine/position = Vector2(-306.66666, 93.333336)
+nodes/HitOneShot/node = SubResource("AnimationNodeOneShot_fjrip")
+nodes/HitOneShot/position = Vector2(26.666666, 200)
+nodes/Animation/node = SubResource("AnimationNodeAnimation_tuyoq")
+nodes/Animation/position = Vector2(-293.33334, 333.33334)
+node_connections = [&"output", 0, &"HitOneShot", &"HitOneShot", 0, &"MoveStateMachine", &"HitOneShot", 1, &"Animation"]
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_qhqgy"]
+height = 0.25219727
+
+[sub_resource type="StandardMaterial3D" id="Material_air_jump"]
+shading_mode = 0
+albedo_color = Color(0.2, 1, 1, 1)
+emission_enabled = true
+emission = Color(0.2, 1, 1, 1)
+
+[sub_resource type="TorusMesh" id="Mesh_air_jump"]
+inner_radius = 0.5
+outer_radius = 0.64
+rings = 24
+ring_segments = 8
+material = SubResource("Material_air_jump")
+
+[node name="Player" type="CharacterBody3D" unique_id=308961290 groups=["Player"]]
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("1_g2els")
+
+[node name="Skin" parent="." unique_id=636983440 instance=ExtResource("1_3vyb7")]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1994264028]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+shape = SubResource("CapsuleShape3D_g2els")
+
+[node name="CameraController" parent="." unique_id=1795631897 instance=ExtResource("3_qhqgy")]
+transform = Transform3D(1, 0, 0, 0, 0.90630776, 0.42261827, 0, -0.42261827, 0.90630776, 0, 1.4, 0)
+shape = SubResource("SphereShape3D_qhqgy")
+
+[node name="AnimationTree" type="AnimationTree" parent="." unique_id=542778372]
+root_node = NodePath("../Skin")
+tree_root = SubResource("AnimationNodeBlendTree_qhqgy")
+anim_player = NodePath("../Skin/AnimationPlayer")
+parameters/HitOneShot/active = false
+parameters/HitOneShot/internal_active = false
+parameters/HitOneShot/request = 0
+
+[node name="HitTimer" type="Timer" parent="." unique_id=2141635009]
+wait_time = 0.6
+one_shot = true
+
+[node name="JumpDetectionArea" type="Area3D" parent="." unique_id=648655718]
+collision_layer = 0
+collision_mask = 4
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="JumpDetectionArea" unique_id=900469903]
+transform = Transform3D(0.99982244, 0.016049217, -0.009874135, -0.015985299, 0.999851, 0.0065177493, 0.009977281, -0.0063587325, 0.99993, 0, -0.06666887, 0)
+shape = SubResource("CylinderShape3D_qhqgy")
+
+[node name="UI" type="CanvasLayer" parent="." unique_id=92347591]
+
+[node name="HFlowContainer" type="HFlowContainer" parent="UI" unique_id=1944262838]
+custom_minimum_size = Vector2(500, 50)
+anchors_preset = -1
+offset_left = 10.0
+offset_top = 10.0
+
+[node name="JumpSound" type="AudioStreamPlayer3D" parent="." unique_id=2068614325]
+stream = ExtResource("4_dqkch")
+
+[node name="HitSound" type="AudioStreamPlayer3D" parent="." unique_id=1108802842]
+stream = ExtResource("5_qlg0r")
+
+[node name="AirJumpSound" type="AudioStreamPlayer3D" parent="."]
+stream = ExtResource("4_dqkch")
+pitch_scale = 1.45
+
+[node name="AirJumpRing" type="MeshInstance3D" parent="."]
+visible = false
+position = Vector3(0, 0.15, 0)
+mesh = SubResource("Mesh_air_jump")
+cast_shadow = 0
+
+[node name="AirJumpFlash" type="Timer" parent="."]
+wait_time = 0.25
+one_shot = true
+
+[connection signal="timeout" from="AirJumpFlash" to="AirJumpRing" method="hide"]
+[connection signal="body_entered" from="JumpDetectionArea" to="." method="_on_jump_detection_area_body_entered"]
+
+[editable path="Skin"]

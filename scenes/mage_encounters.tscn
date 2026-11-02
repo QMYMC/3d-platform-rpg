@@ -1,0 +1,11 @@
+[gd_scene format=3]
+
+[ext_resource type="PackedScene" path="res://scenes/mage.tscn" id="1"]
+
+[node name="RangedGuards" type="Node3D"]
+
+[node name="RuinsMage" parent="." instance=ExtResource("1")]
+position = Vector3(7.5, 2, -28.5)
+
+[node name="CourtyardMage" parent="." instance=ExtResource("1")]
+position = Vector3(18.5, 2, -43.7)

@@ -1,0 +1,111 @@
+[gd_scene format=3]
+
+[ext_resource type="PackedScene" path="res://scenes/rune.tscn" id="1_bivrw"]
+[ext_resource type="Script" path="res://scenes/pickup.gd" id="2_if1un"]
+[ext_resource type="PackedScene" path="res://scenes/jump_unlock.tscn" id="3_sy7x3"]
+[ext_resource type="PackedScene" path="res://scenes/health_pickup.tscn" id="4_x3qhx"]
+[ext_resource type="PackedScene" path="res://scenes/rune_gate.tscn" id="5_c0sds"]
+[ext_resource type="Script" path="res://scenes/rune_gate.gd" id="6_m1qyw"]
+[ext_resource type="MeshLibrary" path="res://mesh/level_meshes.tres" id="7_iw1lj"]
+[ext_resource type="Script" path="res://scenes/lava.gd" id="8_hodtq"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_tf2cl"]
+size = Vector3(10, 10, 1.5)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_os5nc"]
+size = Vector3(3, 0.5, 6)
+
+[node name="Adventure" type="Node3D" unique_id=766916585]
+
+[node name="RuneCamp" type="Area3D" parent="." unique_id=47950253 groups=["Pickups"] instance=ExtResource("1_bivrw")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -3)
+collision_layer = 0
+collision_mask = 2
+script = ExtResource("2_if1un")
+rune_id = &"camp"
+
+[node name="RuneRuins" type="Area3D" parent="." unique_id=470603425 groups=["Pickups"] instance=ExtResource("1_bivrw")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13, 2, -21)
+collision_layer = 0
+collision_mask = 2
+script = ExtResource("2_if1un")
+rune_id = &"ruins"
+
+[node name="RuneCourtyard" type="Area3D" parent="." unique_id=105757339 groups=["Pickups"] instance=ExtResource("1_bivrw")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 27, 2, -43)
+collision_layer = 0
+collision_mask = 2
+script = ExtResource("2_if1un")
+rune_id = &"courtyard"
+
+[node name="DoubleJumpUnlock" type="Area3D" parent="." unique_id=303395015 groups=["Pickups"] instance=ExtResource("3_sy7x3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 2, -28.5)
+collision_layer = 0
+collision_mask = 2
+script = ExtResource("2_if1un")
+kind = 1
+
+[node name="BranchApproach" type="CollisionShape3D" parent="DoubleJumpUnlock" unique_id=114453116]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 3, 3.5)
+shape = SubResource("BoxShape3D_tf2cl")
+
+[node name="HealthCamp" type="Area3D" parent="." unique_id=1489651730 groups=["Pickups"] instance=ExtResource("4_x3qhx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.5, 0, -3)
+collision_layer = 0
+collision_mask = 2
+script = ExtResource("2_if1un")
+kind = 2
+
+[node name="HealthRuins" type="Area3D" parent="." unique_id=1119942305 groups=["Pickups"] instance=ExtResource("4_x3qhx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 1, -19)
+collision_layer = 0
+collision_mask = 2
+script = ExtResource("2_if1un")
+kind = 2
+
+[node name="Gate" type="Node3D" parent="." unique_id=1898346925 instance=ExtResource("5_c0sds")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 17, 1, -54)
+script = ExtResource("6_m1qyw")
+
+[node name="DoubleJumpChallenge" type="GridMap" parent="." unique_id=1827986453]
+mesh_library = ExtResource("7_iw1lj")
+cell_size = Vector3(1, 1, 1)
+collision_mask = 0
+data = {
+"cells": PackedInt32Array(65556, 65491, 2, 65556, 65492, 2, 65556, 65493, 2, 65556, 65494, 2, 65557, 65491, 2, 65557, 65492, 2, 65557, 65493, 2, 65557, 65494, 2, 65562, 65491, 2, 65562, 65492, 2, 65562, 65493, 2, 65562, 65494, 2, 65563, 65491, 2, 65563, 65492, 2, 65563, 65493, 2, 65563, 65494, 2, 65564, 65491, 2, 65564, 65492, 2, 65564, 65493, 2, 65564, 65494, 2)
+}
+
+[node name="ChallengeLava" type="GridMap" parent="." unique_id=1537963828]
+mesh_library = ExtResource("7_iw1lj")
+cell_size = Vector3(1, 1, 1)
+collision_mask = 0
+data = {
+"cells": PackedInt32Array(-131045, 65490, 4, -131045, 65491, 4, -131045, 65492, 4, -131045, 65493, 4, -131045, 65494, 4, -131045, 65495, 4, -131044, 65490, 4, -131044, 65491, 4, -131044, 65492, 4, -131044, 65493, 4, -131044, 65494, 4, -131044, 65495, 4, -131043, 65490, 4, -131043, 65491, 4, -131043, 65492, 4, -131043, 65493, 4, -131043, 65494, 4, -131043, 65495, 4)
+}
+
+[node name="ChallengeLavaHazard" type="Area3D" parent="." unique_id=1428354334]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 28.5, -0.8, -43)
+collision_layer = 0
+collision_mask = 2
+script = ExtResource("8_hodtq")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="ChallengeLavaHazard" unique_id=562406488]
+shape = SubResource("BoxShape3D_os5nc")
+
+[node name="ChallengeSign" type="Label3D" parent="." unique_id=658172049]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20.5, 4.5, -43)
+visibility_range_end = 16.0
+pixel_size = 0.007
+billboard = 1
+text = "符文浮台 →
+二段跳跨越宽沟 · 松开后再按空格"
+outline_size = 8
+
+[node name="ShortcutSign" type="Label3D" parent="." unique_id=1515616265]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15, 4, -24.5)
+visibility_range_end = 16.0
+pixel_size = 0.007
+billboard = 1
+text = "前方符印解锁二段跳
+可沿主路回走补取符文"
+outline_size = 8
